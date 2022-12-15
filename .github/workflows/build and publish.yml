@@ -29,10 +29,10 @@ jobs:
 
     - name: 'Restore packages'
       run: dotnet restore ${{ env.PROJECT_PATH }}
-    
-    - name: 'Build project'
-      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --output env.RELEASE_OUTPUT_DIRECTORY
-
+         
+    - name: 'Publish single executable'
+      run: dotnet publish ${{ env.PROJECT_PATH }} --no-restore --configuration Release -r win-x64 /p:PublishSingleFile=true --output env.RELEASE_OUTPUT_DIRECTORY
+      
     - name: Upload the binary artifacts
       uses: actions/upload-artifact@v2
       with:
