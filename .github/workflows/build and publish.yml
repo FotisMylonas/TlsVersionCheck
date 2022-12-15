@@ -3,22 +3,18 @@ name: Build and publish
 on:
   push:
     tags:
-      - v*
+      - 'v*'
       
 env:
-  PROJECT_PATH: TlsVersionCheck/TlsVersionCheck.csproj
+  PROJECT_PATH: 'TlsVersionCheck/TlsVersionCheck.csproj'
   RELEASE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
-  NUGET_SOURCE_URL: https://api.nuget.org/v3/index.json
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
   
 jobs:
   build:
-    name: Deploy
-    runs-on: windows-latest
+    name: 'Deploy'
+    runs-on: 'windows-latest'
     steps:
-      - name: 'Get version'
-        id: version
-        uses: battila7/get-version-action@v2
-        
       - name: 'Checkout'
         uses: actions/checkout@v2
         
@@ -33,6 +29,10 @@ jobs:
       - name: 'Publish single executable'
         run: dotnet publish ${{ env.PROJECT_PATH }} --no-restore --configuration Release -r win-x64 /p:PublishSingleFile=true --output ${{env.RELEASE_OUTPUT_DIRECTORY }}
         
+      - name: 'Get version'
+        id: version
+        uses: battila7/get-version-action@v2        
+        
       - name: 'Upload the binary artifacts'
         uses: actions/upload-artifact@v2
         with:
@@ -40,8 +40,8 @@ jobs:
           path: ${{ env.RELEASE_OUTPUT_DIRECTORY }}
           
   create-release:
-    needs: build
-    runs-on: windows-latest
+    needs: 'build'
+    runs-on: 'windows-latest'
     steps:
       - uses: actions/checkout@v2
       - name: 'Create Release'
