@@ -49,7 +49,6 @@ jobs:
           release_name: Release V ${{ steps.version.outputs.version-without-v }}
           draft: false
           prerelease: false
-          asset_upload: ${{ env.RELEASE_OUTPUT_DIRECTORY }}
           
       - name: Upload Release Asset
         id: upload-release-asset 
