@@ -39,11 +39,6 @@ jobs:
           name: 'TlsVersionCheck.exe'
           path: ${{ env.RELEASE_OUTPUT_DIRECTORY }}
           
-  create-release:
-    needs: 'build'
-    runs-on: 'windows-latest'
-    steps:
-      - uses: actions/checkout@v2
       - name: 'Create Release'
         uses: actions/create-release@v1
         env:
