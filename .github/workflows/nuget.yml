@@ -1,0 +1,40 @@
+name: "Deploy to Nuget"
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+env:
+  PROJECT_PATH: 'TlsVersionCheck/TlsVersionCheck.csproj'
+  RELEASE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+
+jobs:
+  deploy:
+    name: 'Deploy'
+    runs-on: 'windows-latest'
+    steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v2
+
+    - name: 'Install dotnet'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: 'Restore packages'
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+    
+    - name: 'Build project'
+      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --output env.RELEASE_OUTPUT_DIRECTORY
+
+    - name: 'Get version'
+      id: version
+      uses: battila7/get-version-action@v2
+
+    - name: Upload the binary artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: TlsVersionCheck.exe
+        path: env.RELEASE_OUTPUT_DIRECTORY
