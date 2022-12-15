@@ -1,4 +1,4 @@
-name: "Deploy to Nuget"
+name: "Build and publish"
 
 on:
   push:
