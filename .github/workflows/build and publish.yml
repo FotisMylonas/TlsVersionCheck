@@ -15,28 +15,28 @@ jobs:
     name: Deploy
     runs-on: windows-latest
     steps:
-      - name: Get version
+      - name: 'Get version'
         id: version
         uses: battila7/get-version-action@v2
         
-      - name: Checkout
+      - name: 'Checkout'
         uses: actions/checkout@v2
         
-      - name: Install dotnet
+      - name: 'Install dotnet'
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
           
-      - name: Restore packages
+      - name: 'Restore packages'
         run: dotnet restore ${{ env.PROJECT_PATH }}
         
-      - name: Publish single executable
+      - name: 'Publish single executable'
         run: dotnet publish ${{ env.PROJECT_PATH }} --no-restore --configuration Release -r win-x64 /p:PublishSingleFile=true --output ${{env.RELEASE_OUTPUT_DIRECTORY }}
         
-      - name: Upload the binary artifacts
+      - name: 'Upload the binary artifacts'
         uses: actions/upload-artifact@v2
         with:
-          name: TlsVersionCheck.exe
+          name: 'TlsVersionCheck.exe'
           path: ${{ env.RELEASE_OUTPUT_DIRECTORY }}
           
   create-release:
@@ -44,7 +44,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Release
+      - name: 'Create Release'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
