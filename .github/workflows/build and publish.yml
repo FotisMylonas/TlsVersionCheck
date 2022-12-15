@@ -15,6 +15,10 @@ jobs:
     name: 'Deploy'
     runs-on: 'windows-latest'
     steps:
+    - name: 'Get version'
+      id: version
+      uses: battila7/get-version-action@v2
+      
     - name: 'Checkout'
       uses: actions/checkout@v2
 
@@ -28,10 +32,6 @@ jobs:
     
     - name: 'Build project'
       run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release --output env.RELEASE_OUTPUT_DIRECTORY
-
-    - name: 'Get version'
-      id: version
-      uses: battila7/get-version-action@v2
 
     - name: Upload the binary artifacts
       uses: actions/upload-artifact@v2
