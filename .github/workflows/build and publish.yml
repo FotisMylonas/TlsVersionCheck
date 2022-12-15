@@ -36,11 +36,11 @@ jobs:
     - name: Upload the binary artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: TlsVersionCheck.exe
+        name: 'TlsVersionCheck.exe'
         path: {{ env.RELEASE_OUTPUT_DIRECTORY }}
   create-release:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: 'windows-latest'
     steps:
       - uses: actions/checkout@v2
       - name: Create Release
